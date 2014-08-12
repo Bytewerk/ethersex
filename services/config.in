@@ -27,5 +27,6 @@ source services/lome6/config.in
 source services/projectors/sanyoZ700/config.in
 source services/freqcount/config.in
 source services/tanklevel/config.in
+source services/irsnd_webui/config.in
 endmenu
 

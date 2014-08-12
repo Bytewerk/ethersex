@@ -1,0 +1,2 @@
+dep_bool_menu "Web UI for IRMP TX" IRSND_WEBUI_SUPPORT $IRMP_TX_SUPPORT $HTTPD_SUPPORT
+endmenu
