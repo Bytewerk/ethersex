@@ -1,9 +1,30 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="utf-8">
 		<title>send IR commands</title>
 	</head>
 	<body>
 		<h1>send IR commands</h1>
+			<form>
+				<fieldset>
+					<legend>manual code entry</legend>
+					<table>
+					<tr>
+						<td><label for="prot">Protocol</label></td>
+						<td><label for="dev">Device ID</label></td>
+						<td><label for="cmd">Command</label></td>
+						<td><label for="flags">Flags</label></td>
+					</tr><tr>
+						<td><input type="text" id="prot"></td>
+						<td><input type="text" id="dev"></td>
+						<td><input type="text" id="cmd"></td>
+						<td><input type="text" id="flags"></td>
+						<td><input type="button" value="send" id="mce_submit"></td>
+					</tr>
+					</table>
+				</fieldset>
+			</form>
+		<script type="text/javascript" src="irs.js"></script>
 	</body>
 </html>
