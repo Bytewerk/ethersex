@@ -95,3 +95,11 @@ ifdef(`conf_TANKLEVEL', `
 ifdef(`conf_TANKLEVEL_LOCK', `
   pin(TANKLEVEL_LOCK, PA2, INPUT)
 ')
+
+ifdef(`conf_IRMP', `dnl
+dnl pin(IRMP_RX, PD3)
+#undef IRMP_USE_TIMER2
+pin(IRMP_TX, PD7) dnl OC2/OC2A
+#undef IRMP_TX_LED_LOW_ACTIVE
+dnl pin(STATUSLED_IRMP_TX, PC2, OUTPUT)
+')
