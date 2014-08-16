@@ -17,12 +17,16 @@ function create_fieldset(name,prot,dev,commands){
 	var leg = document.createElement("legend")
 	leg.textContent = name
 	fs.appendChild(leg)
-	for (var cmd in commands){
-		var btn = document.createElement("input")
-		btn.type = "button"
-		btn.value = cmd
-		add_onclick(btn,prot,dev,commands,cmd)
-		fs.appendChild(btn)
+	for (var i in commands){
+		var groupdiv = document.createElement("div")
+		for (var cmd in commands[i]){
+			var btn = document.createElement("input")
+			btn.type = "button"
+			btn.value = cmd
+			add_onclick(btn,prot,dev,commands[i],cmd)
+			groupdiv.appendChild(btn)
+		}
+		fs.appendChild(groupdiv)
 	}
 	$("irf").appendChild(fs)
 }
