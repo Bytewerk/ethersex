@@ -1,3 +1,4 @@
+dnl Configuration file for use of the irsnd_webui at the Bytewerk
 {
 	"Amplifier":{
 		"prot":"02",

@@ -1,15 +1,11 @@
 "use strict";
-function $(id){ return document.getElementById(id) }
-
 function irmp_ecmd(prot,dev,cmd,flags){
-	var req = new XMLHttpRequest()
-	req.open('GET','/ecmd?irmp send+'+prot+'+'+dev+'+'+cmd+'+'+flags)
-	req.send()
-	/* TODO: handle ECMD return status */
-}
-
-function add_onclick(btn,prot,dev,commands,cmd){
-	btn.onclick = function(){ irmp_ecmd(prot,dev,commands[cmd],"00") }
+	var h = function(xmlHttp, data){
+		if(ecmd_error(xmlHttp)){
+			alert("ECMD parse error!")
+		}
+	}
+	ArrAjax.ecmd('irmp send '+prot+' '+dev+' '+cmd+' '+flags,h,"GET",null)
 }
 
 function create_fieldset(name,prot,dev,commands){
@@ -17,34 +13,27 @@ function create_fieldset(name,prot,dev,commands){
 	var leg = document.createElement("legend")
 	leg.textContent = name
 	fs.appendChild(leg)
+	var mkonclick = function(prot,dev,cmd){ return function(){ irmp_ecmd(prot,dev,cmd,"00") }; }
 	for (var i in commands){
 		var groupdiv = document.createElement("div")
 		for (var cmd in commands[i]){
 			var btn = document.createElement("input")
 			btn.type = "button"
 			btn.value = cmd
-			add_onclick(btn,prot,dev,commands[i],cmd)
+			btn.onclick = mkonclick(prot,dev,commands[i][cmd])
 			groupdiv.appendChild(btn)
 		}
 		fs.appendChild(groupdiv)
 	}
-	$("irf").appendChild(fs)
+	$("irf").insertBefore(fs,$("mcef"))
 }
 
-function init(){
-	var b = $("mce_submit")
-	b.onclick = function(){ irmp_ecmd($("prot").value,$("dev").value,$("cmd").value,$("flags").value) }
-	var req = new XMLHttpRequest();
-	req.open('GET','/ircode')
-	var ircode = null
-	req.onload = function(){
-		var ircode = JSON.parse(req.responseText)
-		for (var name in ircode){
-			var irdev = ircode[name]
-			create_fieldset(name,irdev.prot,irdev.dev,irdev.commands)
-		}
+$("mce_submit").onclick = function(){ irmp_ecmd($("prot").value,$("dev").value,$("cmd").value,$("flags").value) }
+var h = function(xmlHttp, data){
+	var ircode = JSON.parse(xmlHttp.responseText)
+	for (var name in ircode){
+		var irdev = ircode[name]
+		create_fieldset(name,irdev.prot,irdev.dev,irdev.commands)
 	}
-	req.send()
 }
-
-init();
+ArrAjax.aufruf('/ircode',h,"GET",null)

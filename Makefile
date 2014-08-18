@@ -184,7 +184,7 @@ endif
 ifeq ($(VFS_INLINE_SUPPORT),y)
 INLINE_FILES += $(shell ls embed/* | $(SED) '/\.tmp$$/d; /\.gz$$/d; /~$$/d; s/\.cpp$$//; s/\.m4$$//; s/\.sh$$//;')
 ifeq ($(DEBUG_INLINE_FILES),y)
-.PRECIOUS = $(INLINE_FILES)
+.PRECIOUS: $(INLINE_FILES)
 endif
 else
 INLINE_FILES :=
