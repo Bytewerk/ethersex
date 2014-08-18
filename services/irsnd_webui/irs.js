@@ -25,7 +25,7 @@ function create_fieldset(name,prot,dev,commands){
 		}
 		fs.appendChild(groupdiv)
 	}
-	$("irf").appendChild(fs)
+	$("irf").insertBefore(fs,$("mcef"))
 }
 
 $("mce_submit").onclick = function(){ irmp_ecmd($("prot").value,$("dev").value,$("cmd").value,$("flags").value) }
