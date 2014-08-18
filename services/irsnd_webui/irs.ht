@@ -25,6 +25,7 @@
 					</table>
 				</fieldset>
 			</form>
+		<script type="text/javascript" src="scr.js"></script>
 		<script type="text/javascript" src="irs.js"></script>
 	</body>
 </html>
