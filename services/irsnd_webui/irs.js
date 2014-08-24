@@ -1,11 +1,11 @@
 "use strict";
-function irmp_ecmd(prot,dev,cmd,flags){
+function irmp_ecmd(prot,cmd,flags){
 	var h = function(xmlHttp, data){
 		if(ecmd_error(xmlHttp)){
 			alert("ECMD parse error!")
 		}
 	}
-	ArrAjax.ecmd('irmp send '+prot+' '+dev+' '+cmd+' '+flags,h,"GET",null)
+	ArrAjax.ecmd('irmp send '+prot+' '+cmd+' '+flags,h,"GET",null)
 }
 
 function create_fieldset(name,prot,dev,commands){
@@ -13,14 +13,14 @@ function create_fieldset(name,prot,dev,commands){
 	var leg = document.createElement("legend")
 	leg.textContent = name
 	fs.appendChild(leg)
-	var mkonclick = function(prot,dev,cmd){ return function(){ irmp_ecmd(prot,dev,cmd,"00") }; }
+	var mkonclick = function(prot,cmd){ return function(){ irmp_ecmd(prot,cmd,"00") }; }
 	for (var i in commands){
 		var groupdiv = document.createElement("div")
 		for (var cmd in commands[i]){
 			var btn = document.createElement("input")
 			btn.type = "button"
 			btn.value = cmd
-			btn.onclick = mkonclick(prot,dev,commands[i][cmd])
+			btn.onclick = mkonclick(prot,commands[i][cmd])
 			groupdiv.appendChild(btn)
 		}
 		fs.appendChild(groupdiv)
@@ -28,7 +28,7 @@ function create_fieldset(name,prot,dev,commands){
 	$("irf").insertBefore(fs,$("mcef"))
 }
 
-$("mce_submit").onclick = function(){ irmp_ecmd($("prot").value,$("dev").value,$("cmd").value,$("flags").value) }
+$("mce_submit").onclick = function(){ irmp_ecmd($("prot").value,$("dev").value+' '+$("cmd").value,$("flags").value) }
 var h = function(xmlHttp, data){
 	var ircode = JSON.parse(xmlHttp.responseText)
 	for (var name in ircode){
