@@ -7,6 +7,7 @@
 	<body>
 		<h1>send IR commands</h1>
 			<form id="irf">
+				<input type="button" value="MAKE IT SO" id="btwrk_macro">
 				<fieldset id="mcef">
 					<legend>manual code entry</legend>
 					<table>

@@ -29,11 +29,22 @@ function create_fieldset(name,prot,dev,commands){
 }
 
 $("mce_submit").onclick = function(){ irmp_ecmd($("prot").value,$("dev").value+' '+$("cmd").value,$("flags").value) }
+var ircode
 var h = function(xmlHttp, data){
-	var ircode = JSON.parse(xmlHttp.responseText)
+	ircode = JSON.parse(xmlHttp.responseText)
 	for (var name in ircode){
 		var irdev = ircode[name]
 		create_fieldset(name,irdev.prot,irdev.dev,irdev.commands)
 	}
 }
 ArrAjax.aufruf('/ircode',h,"GET",null)
+$("btwrk_macro").onclick = function(){
+	var amp = ircode.Amplifier
+	var prot = amp.prot
+	var cmds = amp.commands
+	irmp_ecmd(prot,cmds[0]["ON/OFF"],0)
+	for(var i=0; i<10; ++i){
+		irmp_ecmd(prot,cmds[1]["VOLUME UP"],0)
+	}
+	irmp_ecmd(prot,cmds[2]["DVD"],0)
+}
